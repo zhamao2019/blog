@@ -4,14 +4,6 @@ from django.db import models
 from django.utils.timezone import now
 
 
-# class CustomUser(models.Model):
-#     uuid = models.UUIDField(unique=True, default=uuid.uuid4)
-#     username = models.CharField(max_length=20)
-#     password = models.CharField(max_length=16)
-#     email = models.EmailField()
-#     created_at = models.DateTimeField("datetime created")
-
-
 class Post(models.Model):
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
@@ -25,3 +17,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    comment = models.TextField(default="", max_length=500)
+    created_at = models.DateTimeField(default=now)
+
