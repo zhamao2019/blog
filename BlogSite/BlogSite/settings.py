@@ -138,5 +138,9 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email Test server
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 1025
+
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
