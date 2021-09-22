@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'blog',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +58,7 @@ ROOT_URLCONF = 'BlogSite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,6 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Identify user model
+AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTHENTICATION_BACKENDS = ['accounts.authentication.EmailBackend']
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -128,3 +134,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRCT_URL = '/'
+LOGOUT_REDIRCT_URL = '/'

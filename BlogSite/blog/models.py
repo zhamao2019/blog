@@ -4,12 +4,6 @@ from django.db import models
 from django.utils.timezone import now
 
 
-class PlatformUser(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
-    avatar = models.ImageField(null=True, blank=True)
-
-
 class Post(models.Model):
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
