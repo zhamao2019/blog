@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+{% block content %}
+
+<div class="container py-5">
+    <h1>Login</h1>
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" id="submit">Login</button>
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+</div>
+{% endblock %}

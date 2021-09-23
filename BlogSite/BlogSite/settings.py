@@ -109,7 +109,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Identify user model
 AUTH_USER_MODEL = 'accounts.CustomUser'
-AUTHENTICATION_BACKENDS = ['accounts.authentication.EmailBackend']
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'accounts.backends.EmailOrUsernameBackend',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -135,5 +138,9 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRCT_URL = '/'
-LOGOUT_REDIRCT_URL = '/'
+# Email Test server
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 1025
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
