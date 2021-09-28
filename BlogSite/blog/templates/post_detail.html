@@ -4,7 +4,14 @@
     <div class="post_details">
         <div class="post_info">
             <h1>{{ post.title }}</h1>
-            <h2>By: {{ post.author }}  on {{ post.published_at }} | <a href="#"> + Edit </a> | <a href="#"> + Delete </a></h2>
+
+            <h2>By: {{ post.author }}  on {{ post.published_at }}</h2>
+            {% if user.is_authenticated and post.author == user %}
+
+                <h2><a href="{% url 'edit-post' post.pk %}"> + Edit </a> | <a href="{% url 'delete-post' post.pk %}"> + Delete </a></h2>
+
+            {% endif %}
+
         </div>
         <div class="post_content">
             {{ post.content_body }}
