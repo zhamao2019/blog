@@ -1,7 +1,8 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
+# from django.contrib.staticfiles.storage import
 
 
 class CustomUserManager(BaseUserManager):
@@ -49,9 +50,34 @@ class CustomUser(AbstractUser):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
-    avatar = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(upload_to="img/avatar", null=True, blank=True)
 
     objects = CustomUserManager()
 
     def __str__(self):
         return self.username
+
+    # def get_absolute_url(self):
+    #     return reverse("profile", args=(str(self.user.id)))
+    #
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    bio = models.TextField(null=True, blank=True)
+    avatar = models.ImageField(default="default.png", upload_to="static/img/", null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+    def get_absolute_url(self):
+        return reverse("profile", args=(str(self.user.id)))
+
+    # @property
+    # def get_avatar(self):
+    #     if self.avatar:
+    #         return self.avatar.url
+    #     else:
+    #         return static("img/avatar/default.png")
+
+
