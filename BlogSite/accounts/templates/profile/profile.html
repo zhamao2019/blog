@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{% block content %}
+
+
+    <div class="profile">
+        <div class="profile-info">
+            <h1>{{ userprofile.user }}</h1>
+            <div><img src="{{ userprofile.avatar.url }}"></div>
+            <h2>Bio: </h2><p>{{ userprofile.bio }}</p>
+            <h2>Email: {{ userprofile.email }}</h2>
+        {% if user.is_authenticated %}
+            <h2><a href="{% url 'edit-profile' userprofile.pk %}"> + Edit </a></h2>
+        {% endif %}
+
+        </div>
+
+        <div class="profile-post-history">
+            <h2>Post History</h2>
+{#            {% for post in  %}#}
+{#                <li>#}
+{#                    <h2 class="post_title"><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h2>#}
+{##}
+{#                </li>#}
+{##}
+{#            {% endfor %}#}
+
+        </div>
+
+
+    </div>
+
+{% endblock %}
