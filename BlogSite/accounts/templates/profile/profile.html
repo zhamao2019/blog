@@ -5,10 +5,14 @@
     <div class="profile">
         <div class="profile-info">
             <h1>{{ userprofile.user }}</h1>
-            <div><img src="{{ userprofile.avatar.url }}"></div>
+
+            <div>
+               <img src="{{ userprofile.avatar.url }}">
+
+            </div>
             <h2>Bio: </h2><p>{{ userprofile.bio }}</p>
             <h2>Email: {{ userprofile.email }}</h2>
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and user.pk == userprofile.user_id %}
             <h2><a href="{% url 'edit-profile' userprofile.pk %}"> + Edit </a></h2>
         {% endif %}
 

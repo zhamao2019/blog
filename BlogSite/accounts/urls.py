@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from .views import UserRegisterView, UserLoginView, ProfileView, UpdateProfileView
 
 
@@ -11,3 +13,7 @@ urlpatterns = [
     # path('register/', viewset=LoginViewSet, name='register'),
     # path('logout',),
 ]
+
+# Only add this when we in debug mode
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

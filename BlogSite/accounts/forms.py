@@ -20,10 +20,3 @@ class UpdateCustomUserForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = ["username", "email"]
-
-
-class UpdateUserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ["avatar", "bio"]
-

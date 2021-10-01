@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from .serializers import CustomUserSerializer
 from .models import CustomUser, UserProfile
 
-from .forms import CustomUserCreationForm, CustomUserLoginForm, UpdateUserProfileForm
+from .forms import CustomUserCreationForm, CustomUserLoginForm
 
 
 class UserLoginView(auth_views.LoginView):
@@ -27,7 +27,6 @@ class UpdateProfileView(UpdateView):
     model = UserProfile
     template_name = "profile/edit_profile.html"
     fields = ["bio", "avatar"]
-    # success_url = "/profile/{profile_id}"
 
     def get_success_url(self):
         return reverse_lazy("profile", kwargs={'pk': self.object.pk})
