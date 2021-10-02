@@ -11,10 +11,24 @@
                 <h2><a href="{% url 'edit-post' post.pk %}"> + Edit </a> | <a href="{% url 'delete-post' post.pk %}"> + Delete </a></h2>
 
             {% endif %}
-
         </div>
         <div class="post_content">
             {{ post.content_body }}
+        </div>
+
+        <div class="post_comments">
+            <h1>Comments</h1>
+            {% if not post.post_comments.all %}
+                <p>No comments yet...</p>
+                <a href="{% url 'add-comment' post.pk %}">Add a Comment</a>
+            {% else %}
+                <p><a href="{% url 'add-comment' post.pk %}">Add Comment</a></p>
+
+                {% for comment in post.post_comments.all %}
+                    <strong><a href="{% url 'profile' comment.user.userprofile.pk %}">{{ comment.user }}</a> - {{ comment.created_at }}</strong>
+                    <p>{{ comment.comment }}</p>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 
