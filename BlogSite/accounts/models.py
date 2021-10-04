@@ -68,8 +68,8 @@ class UserProfile(models.Model):
         return self.user.username
 
     # Override the save method of the model
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super(UserProfile, self).save(*args, **kwargs)
         # Open image
         img = Image.open(self.avatar.path)
 
