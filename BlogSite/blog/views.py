@@ -35,6 +35,9 @@ class UpdatePostView(UpdateView):
     template_name = "edit_post.html"
     fields = ("title", "content_body", )
 
+    def get_success_url(self):
+        return reverse_lazy("post-detail", kwargs={'pk': self.object.pk})
+
 
 class DeletePostView(DeleteView):
     model = Post
