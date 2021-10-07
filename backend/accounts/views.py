@@ -1,7 +1,8 @@
 from django.contrib.auth import views as auth_views
-from django.views.generic import CreateView, DetailView, UpdateView, View
+from rest_framework.viewsets import ModelViewSet
+from django.views.generic import CreateView, DetailView, UpdateView
 from django.urls import reverse_lazy
-from .serializers import CustomUserSerializer
+# from .serializers import CustomUserSerializer, UserProfileSerializer
 from .models import CustomUser, UserProfile
 
 from .forms import CustomUserCreationForm, CustomUserLoginForm
@@ -35,10 +36,3 @@ class UpdateProfileView(UpdateView):
     #     return self.request.user
 
 
-
-# class LoginViewSet(ViewSet):
-#     serializer_class = CustomUserSerializer
-#     # queryset = CustomUser.objects.all()
-#
-#     def get_queryset(self):
-#         return CustomUser.objects.filter(self.request.user)
