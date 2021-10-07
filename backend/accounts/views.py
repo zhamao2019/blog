@@ -1,9 +1,10 @@
 from django.contrib.auth import views as auth_views
 from rest_framework.viewsets import ModelViewSet
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.urls import reverse_lazy
 # from .serializers import CustomUserSerializer, UserProfileSerializer
 from .models import CustomUser, UserProfile
+from blog.models import Post
 
 from .forms import CustomUserCreationForm, CustomUserLoginForm
 
@@ -23,6 +24,17 @@ class ProfileView(DetailView):
     model = UserProfile
     template_name = "profile/profile.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        user = self.object.user
+        context["user_posts"] = Post.objects.filter(author=user)
+        return context
+
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     user_posts = Post.objects.filter(author=user)
+    #     return user_posts
+
 
 class UpdateProfileView(UpdateView):
     model = UserProfile
@@ -34,5 +46,3 @@ class UpdateProfileView(UpdateView):
 
     # def get_object(self):
     #     return self.request.user
-
-

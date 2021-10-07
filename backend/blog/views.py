@@ -1,8 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from rest_framework.viewsets import ModelViewSet
-from .serializers import PostSerializer, CommentSerializer
 from.models import Post, Comment
 
 
@@ -60,18 +58,18 @@ class CreateCommentView(CreateView, LoginRequiredMixin):
     def get_success_url(self):
         return reverse_lazy("post-detail", kwargs={'pk': self.object.post.pk})
 
-
-class PostViewSet(ModelViewSet):
-    serializer_class = PostSerializer
-
-    def get_queryset(self):
-        return Post.objects.filter(self.request.user)
-
-
-class CommentViewSet(ModelViewSet):
-    serializer_class = CommentSerializer
-
-    def get_queryset(self):
-        return Comment.objects.filter(self.request.user)
+#
+# class PostViewSet(ModelViewSet):
+#     serializer_class = PostSerializer
+#
+#     def get_queryset(self):
+#         return Post.objects.filter(self.request.user)
+#
+#
+# class CommentViewSet(ModelViewSet):
+#     serializer_class = CommentSerializer
+#
+#     def get_queryset(self):
+#         return Comment.objects.filter(self.request.user)
 
 

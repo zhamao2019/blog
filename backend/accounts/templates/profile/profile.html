@@ -20,13 +20,13 @@
 
         <div class="profile-post-history">
             <h2>Post History</h2>
-{#            {% for post in  %}#}
-{#                <li>#}
-{#                    <h2 class="post_title"><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h2>#}
-{##}
-{#                </li>#}
-{##}
-{#            {% endfor %}#}
+            {% for post in user_posts %}
+                <li>
+                    <h2 class="post_title"><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h2>
+
+                </li>
+
+            {% endfor %}
 
         </div>
 
