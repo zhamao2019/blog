@@ -28,6 +28,22 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOWED_ORIGINS = [
+    'https://localhost:4200',
+    'https://localhost:8000',
+]
+
+
+CORS_ALLOW_HEADERS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
 
 # Application definition
 
@@ -42,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    "corsheaders",
     # remove and replace the old img in path after updated
     # refer: https://github.com/un1t/django-cleanup
     'django_cleanup.apps.CleanupConfig',
@@ -56,6 +73,11 @@ REST_FRAMEWORK = {
     ]
 }
 
+REST_FRAMEWORK = {
+    # Pagination allows you to control how many objects per page are returned.
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,7 +87,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
+
 
 ROOT_URLCONF = 'BlogSite.urls'
 

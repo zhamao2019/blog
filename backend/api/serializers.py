@@ -16,12 +16,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    author = CustomUserSerializer()
+
     class Meta:
         model = Post
-        fields = "__all__"
+        fields = ["id", "uuid", "title", "author", "content_body", "likes_num", "published_at", "edited_at"]
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    user = CustomUserSerializer()
+
     class Meta:
         model = Comment
         fields = "__all__"

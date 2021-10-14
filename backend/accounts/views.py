@@ -30,11 +30,6 @@ class ProfileView(DetailView):
         context["user_posts"] = Post.objects.filter(author=user)
         return context
 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     user_posts = Post.objects.filter(author=user)
-    #     return user_posts
-
 
 class UpdateProfileView(UpdateView):
     model = UserProfile
@@ -44,5 +39,3 @@ class UpdateProfileView(UpdateView):
     def get_success_url(self):
         return reverse_lazy("profile", kwargs={'pk': self.object.pk})
 
-    # def get_object(self):
-    #     return self.request.user
