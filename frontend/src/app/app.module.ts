@@ -10,14 +10,21 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AddPostComponent } from './components/post/add-post/add-post.component';
 import { DetailPostComponent } from './components/post/detail-post/detail-post.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { ProfileComponent } from './components/auth/profile/profile.component';
 
+// import { authInterceptorProviders } from './helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostComponent,
     AddPostComponent,
-    DetailPostComponent
+    DetailPostComponent,
+    RegisterComponent,
+    LoginComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +33,7 @@ import { DetailPostComponent } from './components/post/detail-post/detail-post.c
     FormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  // providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
