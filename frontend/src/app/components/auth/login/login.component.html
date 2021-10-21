@@ -1,0 +1,60 @@
+<div class="card p-3">
+  <h1 class="card-title mb-4 mt-1">Login</h1>
+  <form class="form"
+        *ngIf="!isLoggedIn"
+        name="form"
+        (ngSubmit)="f.form.valid && onLogin()"
+        #f="ngForm"
+        novalidate
+  >
+    <div class="from-group mb-3">
+      <label>Email or username</label>
+      <input name="username" class="form-control" type="text"
+             [(ngModel)]="form.username"
+             required
+             #username="ngModel"
+      >
+      <div id="username_error" class="form-text alert alert-danger"
+           role="alert"
+           *ngIf="f.submitted && username.invalid"
+      >
+        Username or Email is required!
+      </div>
+    </div>
+
+    <div class="from-group mb-3">
+      <label>Password</label>
+      <input class="form-control" type="password" name="password"
+             [(ngModel)]="form.password"
+             required
+             minlength="6"
+             #password="ngModel"
+      >
+      <div id="password_error" class="form-text alert alert-danger"
+           role="alert"
+           *ngIf="f.submitted && password.invalid"
+      >
+        <div *ngIf="password.errors?.required">Password is required</div>
+        <div *ngIf="password.errors?.minlength">Password must be at least 6 characters</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-3"> Login</button>
+
+    <div class="form-group">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="f.submitted && isLoginFailed"
+      >
+        Login failed: {{ errorMessage }}
+      </div>
+    </div>
+  </form>
+
+  <p>Forgot password? <a class="link-styled float-right" href="#">Reset</a></p>
+  <p>Don't have an account? Go to <a href="account/register" class="link-styled float-right">register</a></p>
+</div>
+
+
+

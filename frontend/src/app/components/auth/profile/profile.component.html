@@ -1,0 +1,52 @@
+<div class="profile">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center text-center">
+            <img src="{{ profile.avatar }}" alt="avatar" class="rounded-circle p-1 bg-light" width="110">
+            <div class="mt-3">
+              <h2>{{ profile.user.username }}</h2>
+              <p class="text-secondary">Full Stack Developer</p>
+              <p><a href="#" class="link-styled">Edit Profile</a></p>
+            </div>
+          </div>
+          <hr class="my-4">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <p class="mb-0">Email: </p>
+              <span class="text-secondary">{{ profile.user.email }}</span>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="d-flex align-items-center mb-3">{{ profile.user.username }} Blog Post Histories</h2>
+          <div class="user-posts">
+            <ul>
+              <li class="mb-5 list-unstyled" *ngFor="let post of posts">
+                <div>
+                  <h2 class="card-title mb-1">
+                    <a class="link-dark link-styled"
+                       [routerLink]="['/blog', post.id]">{{ post.title }}</a>
+                  </h2>
+                  <p class="card-text mt-0"><small class="text-muted">
+                    By <a class="link-primary link-styled" [routerLink]="['/account/profile', post.author.userprofile]">{{ post.author.username }}</a>
+                    on {{ post.published_at | date:'yyyy-MM-dd' }}</small>
+                  </p>
+                  <p class="card-text text-secondary">{{ post.content_body | slice:0:100 }} {{ post.content_body.length > 100 ? '...':'' }}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
