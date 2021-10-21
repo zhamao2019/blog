@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'blog', component: PostComponent },
   { path: 'blog/:id', component: DetailPostComponent },
   { path: 'blog/create', component: AddPostComponent },
-  { path: 'account/blogger/:id', component: ProfileComponent },
+  { path: 'account/profile/:id', component: ProfileComponent },
   { path: 'account/login', component: LoginComponent },
   { path: 'account/register', component: RegisterComponent },
 ];

@@ -15,11 +15,8 @@ export class UserService {
     return this.http.get(this.baseUrl, { responseType: 'text' });
   }
 
-  getUserBoard(id:string): Observable<any> {
-    return this.http.get(`${this.baseUrl}${id}/`, { responseType: 'text' });
+  getUser(id:string): Observable<any> {
+    return this.http.get(`${this.baseUrl}${id}/`, {headers: this.httpHeaders});
   }
 
-  getAdminBoard(): Observable<any> {
-    return this.http.get(this.baseUrl + 'admin', { responseType: 'text' });
-  }
 }

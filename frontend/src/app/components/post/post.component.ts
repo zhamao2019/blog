@@ -12,15 +12,16 @@ import { PostService } from '../../services/post.service';
   providers: [PostService, DatePipe],
 })
 export class PostComponent implements OnInit {
-  // posts: Post[] = []
   posts = [{
     id: '',
     uuid: '',
     title: '',
     author: {
+      id: '',
       username: '',
       uuid: '',
       email: '',
+      userprofile: '',
     },
     content_body: '',
     published_at:'',
@@ -42,6 +43,7 @@ export class PostComponent implements OnInit {
         username: '',
         uuid: '',
         email: '',
+        userprofile: ''
       },
       content_body: '',
       published_at:'',
@@ -62,8 +64,6 @@ export class PostComponent implements OnInit {
         console.log(error)
       },
     )
-    console.log(this.posts)
-
   }
 
   onPost = (id:string) => {
@@ -71,8 +71,8 @@ export class PostComponent implements OnInit {
       response => {
         this.selectedPost = response
         this.selectedPost.published_at = this.datepipe.transform(this.selectedPost.published_at, "yyyy-MM-dd");
-        console.log('selectedpost', response);
-      },
+        console.log('selectedpost', this.selectedPost);
+        },
     )
   }
 

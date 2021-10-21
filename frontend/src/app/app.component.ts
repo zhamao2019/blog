@@ -1,6 +1,7 @@
 import {Component,OnInit} from '@angular/core';
 import { TokenStorageService } from './services/token-storage.service';
 import { UserService } from  './services/user.service';
+import {ProfileService} from "./services/profile.service";
 
 
 @Component({
@@ -9,18 +10,19 @@ import { UserService } from  './services/user.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit{
-  title = 'app';
+  title = "app";
   isLoggedIn = false;
-  user:any;
+  loginUser:any;
 
-  constructor(private tokenStorageService: TokenStorageService,) {}
+  constructor(
+    private tokenStorageService: TokenStorageService,) {}
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.user = user
+      const loginUser = this.tokenStorageService.getUser();
+      this.loginUser = loginUser
     }
   }
 
@@ -28,5 +30,4 @@ export class AppComponent implements OnInit{
     this.tokenStorageService.logOut();
     window.location.reload();
   }
-
 }

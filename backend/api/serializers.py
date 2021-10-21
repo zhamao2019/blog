@@ -13,8 +13,11 @@ class TokenObtainSerializer(TokenObtainPairSerializer):
         # Custom data
         data.update({'user': {
             'id': self.user.id,
+            'uuid': self.user.uuid,
             'username': self.user.username,
             'email': self.user.email,
+            'userprofile': self.user.userprofile.id,
+
         }})
 
         return data
@@ -47,44 +50,59 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return user
 
 
-class CustomUserSerializer(serializers.ModelSerializer):
+class MiniUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ("id", "uuid", "username", "email", "password", "is_superuser", "is_active", "date_joined", "last_login")
-    #     extra_kwargs = {
-    #         'password': {'write_only': True},
-    #     }
-    #
-    # def create(self, validated_data):
-    #     user = CustomUser().objects.create_user(**validated_data)
-    #     return user
-    #
-    # def update(self, instance, validated_data):
-    #     if 'password' in validated_data:
-    #         password = validated_data.pop('password')
-    #         instance.set_password(password)
-    #     return super(CustomUserSerializer, self).update(instance, validated_data)
+        fields = ["id",
+                  "uuid",
+                  "username",
+                  "email",
+                  "date_joined",
+                  "last_login",
+                  ]
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    user = MiniUserSerializer(read_only=True)
+
     class Meta:
         model = UserProfile
-        fields = ("id", "avatar", "bio")
+        fields = ["id", "avatar", "bio", "user"]
+        depth = 1
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    userprofile = UserProfileSerializer(read_only=True).data.get('id')
+
+    class Meta:
+        model = CustomUser
+        fields = ["id", "uuid",
+                  "username", "email",
+                  "password", "is_superuser",
+                  "is_active", "date_joined",
+                  "last_login", "userprofile"]
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = CustomUserSerializer()
+    author = CustomUserSerializer(read_only=True)
 
     class Meta:
         model = Post
         fields = ["id", "uuid", "title", "author", "content_body", "likes_num", "published_at", "edited_at"]
+        depth = 1
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = CustomUserSerializer()
+    profile = CustomUserSerializer()
 
     class Meta:
         model = Comment
         fields = "__all__"
+
+
+
 
 

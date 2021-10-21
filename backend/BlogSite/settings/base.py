@@ -29,13 +29,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 CORS_ALLOWED_ORIGINS = [
-    'https://localhost:4200',
-    'https://localhost:8000',
+    'http://localhost:4200',
+    'http://localhost:8000',
 ]
 
-
-CORS_ALLOW_HEADERS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_HEADERS = ['*']
+
 CORS_ALLOW_METHODS = [
     "DELETE",
     "GET",
@@ -49,6 +49,7 @@ CORS_ALLOW_METHODS = [
 
 INSTALLED_APPS = [
     'api',
+    "corsheaders",
     'accounts',
     'blog',
     'django.contrib.admin',
@@ -60,7 +61,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
-    "corsheaders",
     # remove and replace the old img in path after updated
     # refer: https://github.com/un1t/django-cleanup
     'django_cleanup.apps.CleanupConfig',
@@ -91,6 +91,9 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,8 +101,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
 ]
 
 

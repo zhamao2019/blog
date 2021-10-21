@@ -13,9 +13,6 @@ class PostDetailView(DetailView):
     model = Post
     template_name = "post_detail.html"
 
-    # def get_comments(self):
-    #     return self.object.post.
-
 
 class CreatePostView(CreateView, LoginRequiredMixin):
     model = Post

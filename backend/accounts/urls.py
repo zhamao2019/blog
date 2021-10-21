@@ -7,8 +7,8 @@ from django.urls import include, path
 urlpatterns = [
     path('login/', UserLoginView.as_view(), name="login"),
     path('register/', UserRegisterView.as_view(), name="register"),
-    path('blogger/<int:pk>/', ProfileView.as_view(), name="profile"),
-    path('blogger/edit/<int:pk>/', UpdateProfileView.as_view(), name="edit-profile"),
+    path('profile/<int:pk>/', ProfileView.as_view(), name="profile"),
+    path('profile/edit/<int:pk>/', UpdateProfileView.as_view(), name="edit-profile"),
 ]
 
 # Only add this when we in debug mode

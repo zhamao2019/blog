@@ -27,9 +27,11 @@ export class DetailPostComponent implements OnInit {
       uuid: '',
       title: '',
       author: {
+        id: '',
         username: '',
         uuid: '',
         email: '',
+        userprofile: '',
       },
       content_body: '',
       published_at:'',
