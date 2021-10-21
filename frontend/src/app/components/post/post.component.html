@@ -5,7 +5,7 @@
       <div class="card-body">
         <h2 class="card-title mb-1" (click)="onPost(post.id)">{{ post.title }}</h2>
         <p class="card-text mt-0"><small class="text-muted">
-          By <a  class="link-primary link-styled" [routerLink]="['/account/profile', post.author.userprofile]">{{ post.author.username }}</a>
+          By <a  class="link-primary link-styled" [routerLink]="['/account/profile', post.author.userprofile.id]">{{ post.author.username }}</a>
           on {{ post.published_at | date:'yyyy-MM-dd' }}</small>
         </p>
         <p class="card-text">{{ post.content_body | slice:0:100 }} {{ post.content_body.length > 100 ? '...':'' }}</p>

@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.conf.urls import url
 from .views import (
     RegisterViewSet, CustomUserViewSet, ProfileViewSet, PostViewSet, CommentViewSet,
-    PostHistoryView
+    PostHistoryView, CommentListView
 )
 
 router = routers.DefaultRouter()
@@ -15,9 +15,7 @@ router.register(r'posts', PostViewSet, basename="posts")
 router.register(r'comments', CommentViewSet, basename="comments")
 
 urlpatterns = [
-    # path('posts/author/<int:author>', PostHistoryView, name='post-history'),
-    # url(r'^posts/author/(?P<author>\d+)/$', PostHistoryView, name='post-history'),
-    # url(r'^posts/author/(?P<author>\d+)/$', PostHistoryViewSet, name='post-history'),
     url(r'^posts/author/(?P<author>\d+)/$', PostHistoryView.as_view(), name='post-history'),
+    url(r'^comments/post/(?P<post>\d+)/$', CommentListView.as_view(), name='comments-list'),
 ]
 urlpatterns += router.urls

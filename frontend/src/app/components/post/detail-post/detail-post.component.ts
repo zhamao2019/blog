@@ -31,7 +31,9 @@ export class DetailPostComponent implements OnInit {
         username: '',
         uuid: '',
         email: '',
-        userprofile: '',
+        userprofile: {
+          id: '',
+        },
       },
       content_body: '',
       published_at:'',
@@ -42,11 +44,17 @@ export class DetailPostComponent implements OnInit {
       {
         id: '-1',
         user: {
+          id: '',
           username: '',
           uuid: '',
           email: '',
+          userprofile: {
+            id: '',
+            avatar: '',
+            bio: '',
+          },
         },
-        post: '',
+        post_id: '',
         comment: '',
         created_at: '',
       },
@@ -54,7 +62,7 @@ export class DetailPostComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getPost(this.post.id);
-    this.getAllCommentsByPostId(this.post.id);
+    this.getCommentsByPostId(this.post.id);
   }
 
   getPost = (id:string) => {
@@ -67,14 +75,15 @@ export class DetailPostComponent implements OnInit {
     )
   }
 
-  getAllCommentsByPostId = (id:string) => {
+  getCommentsByPostId = (id:string) => {
     this.commentService.getAllComments()
       .pipe(map(
-        response => response.results.filter((comment: any) => comment.post == id)
+        response => response.results.filter((comment: any) => comment.post_id == id)
       ))
       .subscribe(
       response => {
         this.comments = response
+        console.log('comment',response);
         console.log('comment',this.comments);
       },
     )

@@ -56,7 +56,6 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class PostHistoryView(ListView):
-
     def get(self, request, *args, **kwargs):
         posts = Post.objects.filter(author=self.kwargs['author'])
         serializer = PostSerializer(posts, many=True)
@@ -79,3 +78,10 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
 
+
+class CommentListView(ListView):
+    def get(self, request, *args, **kwargs):
+        comments = Comment.objects.filter(post=self.kwargs['post'])
+        serializer = CommentSerializer(comments, many=True)
+
+        return JSONResponse(serializer.data)

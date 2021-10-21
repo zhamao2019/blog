@@ -72,7 +72,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    userprofile = UserProfileSerializer(read_only=True).data.get('id')
+    userprofile = UserProfileSerializer(read_only=True)
 
     class Meta:
         model = CustomUser
@@ -96,11 +96,12 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    profile = CustomUserSerializer()
+    user = CustomUserSerializer(read_only=True)
 
     class Meta:
         model = Comment
-        fields = "__all__"
+        fields = ["id", "comment", "created_at", "post_id", "user"]
+        depth = 1
 
 
 

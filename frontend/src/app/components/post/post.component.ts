@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { PostService } from '../../services/post.service';
+import {CommentService} from "../../services/comment.service";
 
 // import { Post } from "../../models/post";
 
@@ -21,7 +22,9 @@ export class PostComponent implements OnInit {
       username: '',
       uuid: '',
       email: '',
-      userprofile: '',
+      userprofile: {
+        id: '',
+      },
     },
     content_body: '',
     published_at:'',
@@ -32,9 +35,9 @@ export class PostComponent implements OnInit {
 
   constructor(
     private postService: PostService,
+    private commentService: CommentService,
     public datepipe: DatePipe,
   ) {
-    // this.getAllPosts()
     this.selectedPost = {
       id: -1,
       uuid: '',
@@ -43,7 +46,9 @@ export class PostComponent implements OnInit {
         username: '',
         uuid: '',
         email: '',
-        userprofile: ''
+        userprofile: {
+          id: '',
+        }
       },
       content_body: '',
       published_at:'',
@@ -96,13 +101,4 @@ export class PostComponent implements OnInit {
       },
     )
   }
-
-  getDate = (datetime: any) => {
-    const _date = new Date(datetime);
-
-    // return new Date(
-    //   Date.UTC(_date.getFullYear(), _date.getMonth(), _date.getDate())
-    // );
-  }
-
 }

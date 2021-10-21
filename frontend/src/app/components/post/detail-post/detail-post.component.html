@@ -1,6 +1,6 @@
 <div class="container border p-5">
   <h1>{{ post.title }}</h1>
-  <p class="fs-6 text-secondary">By <a class="link-primary link-styled" [routerLink]="['/account/profile', post.author.userprofile]">{{ post.author.username }}</a>
+  <p class="fs-6 text-secondary">By <a class="link-primary link-styled" [routerLink]="['/account/profile', post.author.userprofile.id]">{{ post.author.username }}</a>
     on {{ post.published_at | date:'MMM d, y, h:mm a' }}
   </p>
 
@@ -17,9 +17,11 @@
           <div class="col-md-12">
             <div class="card border-0">
               <div class="d-flex flex-row comment-row align-items-start">
-                <div class="avatar"><img class="rounded-circle" src="https://i.imgur.com/uIgDDDd.jpg" alt="user" width="50"></div>
+                <div class="avatar"><img class="rounded-circle" src="{{ comment.user.userprofile.avatar}}" alt="user" width="50"></div>
                 <div class="comment-text mx-3">
-                  <p class="card-title mb-1"><a href="#" class="link-styled">{{ comment.user.username }}</a></p>
+                  <p class="card-title mb-1">
+                    <a class="link-styled"  [routerLink]="['/account/profile', comment.user.userprofile.id]">{{ comment.user.username }}</a>
+                  </p>
                   <div class="comment-footer mb-2"> <span class="date">{{ comment.created_at | date:'MMM d, y, h:mm a' }}</span></div>
                   <p class="m-b-5 m-t-10">{{ comment.comment }}</p>
                 </div>
