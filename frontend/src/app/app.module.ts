@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PostComponent } from './components/post/post.component';
 
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AddPostComponent } from './components/post/add-post/add-post.component';
 import { DetailPostComponent } from './components/post/detail-post/detail-post.component';
@@ -26,13 +26,14 @@ import { ProfileComponent } from './components/auth/profile/profile.component';
     LoginComponent,
     ProfileComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    HttpClientModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+    ],
   // providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })

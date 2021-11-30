@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {FormControl, FormGroup, FormBuilder, Validators} from "@angular/forms";
 
 import { TokenStorageService } from '../../../services/token-storage.service';
 import { ProfileService } from "../../../services/profile.service";
@@ -27,10 +28,19 @@ export class ProfileComponent implements OnInit {
   }
   profile_pk: any;
   posts: any;
-  selectedPost: any;
+
+  edit:boolean = false;
+  isLoggedIn = false;
+  loginUser:any;
+  profileForm = this.fb.group({
+    id: [this.route.snapshot.paramMap.get('id')],
+    bio: ["", Validators.required],
+  })
 
   constructor(
     private token: TokenStorageService,
+    private tokenStorageService: TokenStorageService,
+    private fb: FormBuilder,
     private profileService: ProfileService,
     private postService: PostService,
     private route: ActivatedRoute,
@@ -39,7 +49,14 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfile();
-    // this.getPostsByUserId();
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      const loginUser = this.tokenStorageService.getUser();
+      this.loginUser = loginUser
+      console.log(this.loginUser)
+    }
   }
 
   getProfile = () => {
@@ -66,12 +83,17 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  onPost = (id:string) => {
-    this.postService.getPost(id).subscribe(
+  updateProfile() {
+    // $event.preventDefault();
+    this.edit = false;
+
+    console.log('update', this.profileForm.value)
+
+    this.profileService.updateProfile(this.profileForm.value).subscribe(
       response => {
-        this.selectedPost = response
+        this.profile = response
         // this.selectedPost.published_at = this.datepipe.transform(this.selectedPost.published_at, "yyyy-MM-dd");
-        console.log('selectedpost', response);
+        console.log(response);
       },
     )
   }
