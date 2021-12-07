@@ -1,1 +1,43 @@
-<p>add-post works!</p>
+<div
+  class="container border p-5"
+  *ngIf="isLoggedIn"
+>
+  <form class="form-group" method="post"
+       [formGroup]="blogForm">
+    <input
+      class="form-control mb-3 fw-bold fs-2"
+      name="bio"
+      type="text"
+      placeholder="Your Title"
+      required="required"
+      formControlName="title"
+    />
+
+    <div class="mb-5 mt-5">
+      <editor
+        apiKey="bigwo7r9kkkk38flqremzmrtfgez5qaqjehhfsjq1q18bwre"
+        [init]="{
+          icons: 'material',
+          skin: 'borderless',
+          plugins: 'wordcount',
+          menubar: false,
+          min_height: 600
+        }"
+        formControlName="content_body"
+      ></editor>
+    </div>
+
+    <button
+      class="btn btn-primary" type="submit"
+      (click)="onPublish()"
+    >Publish</button>
+    <button class="btn btn-outline-secondary mx-3">Cancel</button>
+  </form>
+</div>
+
+<div
+  class="container border p-5"
+  *ngIf="!isLoggedIn"
+>
+  Please Login Your Account
+</div>

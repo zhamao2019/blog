@@ -11,8 +11,7 @@ export class AuthService {
   AUTH_REGISTER_API = 'http://localhost:8000/api/register/';
   httpHeaders = new HttpHeaders({'Content-type':'application/json'});
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,) {}
 
   login(credentials:any): Observable<any> {
     return this.http.post(this.AUTH_LOGIN_API, {

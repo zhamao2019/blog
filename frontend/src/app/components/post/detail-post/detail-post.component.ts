@@ -5,6 +5,7 @@ import { PostService } from '../../../services/post.service';
 import { CommentService } from '../../../services/comment.service';
 import {map} from "rxjs/operators";
 
+
 @Component({
   selector: 'app-detail-post',
   templateUrl: './detail-post.component.html',
@@ -78,7 +79,7 @@ export class DetailPostComponent implements OnInit {
   getCommentsByPostId = (id:string) => {
     this.commentService.getAllComments()
       .pipe(map(
-        response => response.results.filter((comment: any) => comment.post_id == id)
+        response => response.filter((comment: any) => comment.post_id == id)
       ))
       .subscribe(
       response => {
@@ -88,5 +89,4 @@ export class DetailPostComponent implements OnInit {
       },
     )
   }
-
 }

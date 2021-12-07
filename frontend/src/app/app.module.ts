@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { EditorModule } from "@tinymce/tinymce-angular";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +15,8 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { LoginComponent } from './components/auth/login/login.component';
 import { ProfileComponent } from './components/auth/profile/profile.component';
 
-// import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { authInterceptorProviders } from './helpers/auth.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -33,8 +35,9 @@ import { ProfileComponent } from './components/auth/profile/profile.component';
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
+        EditorModule,
     ],
-  // providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

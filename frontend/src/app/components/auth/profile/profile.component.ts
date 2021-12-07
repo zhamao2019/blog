@@ -70,6 +70,10 @@ export class ProfileComponent implements OnInit {
         this.postService.getPostsByUserId(this.profile.user.id).subscribe(
           data => {
             this.posts = data
+            for (let post of this.posts){
+              const bodyText = this.htmlToPlaintext(post.content_body);
+              post.content_body = bodyText;
+            }
             console.log('posts data',data)
           },
           error => {
@@ -96,5 +100,11 @@ export class ProfileComponent implements OnInit {
         console.log(response);
       },
     )
+  }
+
+  htmlToPlaintext(text:string) {
+    let tmp = document.createElement("DIV");
+    tmp.innerHTML = text;
+    return tmp.textContent || tmp.innerText || "";
   }
 }

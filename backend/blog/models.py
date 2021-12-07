@@ -9,7 +9,7 @@ class Post(models.Model):
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
     title = models.CharField(max_length=100, null=False, blank=False)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="posts")
     content_body = models.TextField(null=False, blank=False)
     published_at = models.DateTimeField(default=now)
     edited_at = models.DateTimeField(default=now)
