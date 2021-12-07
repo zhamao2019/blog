@@ -13,7 +13,6 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('api/', include('api.urls')),
     path('api-token-auth/', TokenObtainView.as_view(), name='api-token-auth'),
-    # path('api-token-auth/', TokenObtainPairView.as_view(), name='api-token-auth'),
     path('api-token-refresh/', TokenRefreshView.as_view(), name='api-token-refresh'),
     path('api-auth/', include('rest_framework.urls')),
 ]

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
-import {window} from "rxjs/operators";
+import {FormBuilder} from "@angular/forms";
+import {UserService} from "../../../services/user.service";
 
 
 @Component({
@@ -13,14 +14,29 @@ import {window} from "rxjs/operators";
 })
 export class LoginComponent implements OnInit {
   form: any;
+  loginForm:any;
+  user:any;
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
 
   constructor(
+    private fb: FormBuilder,
     private router: Router,
     private tokenStorage: TokenStorageService,
-    private authService: AuthService,) { }
+    private authService: AuthService,
+    private userService: UserService,
+    ) {
+    this.loginForm = this.fb.group({
+      username: [""],
+      password: [""],
+    })
+    this.user = {
+      id: '',
+      username: '',
+      userprofile: {},
+    }
+  }
 
   ngOnInit(): void {
     this.form = {
@@ -52,4 +68,10 @@ export class LoginComponent implements OnInit {
 
     this.router.navigate(['']);
   }
+
+  onLogOut(){
+
+  }
+
 }
+

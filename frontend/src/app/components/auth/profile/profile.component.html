@@ -4,11 +4,48 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex flex-column align-items-center text-center">
-            <img src="{{ profile.avatar }}" alt="avatar" class="rounded-circle p-1 bg-light" width="110">
+            <img src="{{ profile.avatar }}" alt="avatar" class="rounded-circle p-1 bg-light">
             <div class="mt-3">
               <h2>{{ profile.user.username }}</h2>
-              <p class="text-secondary">Full Stack Developer</p>
-              <p><a href="#" class="link-styled">Edit Profile</a></p>
+              <div class="form-group"
+                   [formGroup]="profileForm">
+                <input
+                  formControlName="bio"
+                  *ngIf="edit"
+
+                  class="form-control mb-3"
+                  name="bio"
+                  type="text"
+                />
+                <p class="text-secondary"
+                   *ngIf="!edit"
+                >{{ profile.bio }}</p>
+                <p class="text-secondary"
+                   *ngIf="!edit && profile.bio ==''"
+                >Empty...</p>
+
+                <button class="btn btn-sm btn-outline-primary"
+                        *ngIf="!edit && isLoggedIn && loginUser.userprofile == profile_pk"
+                        (click)="edit=true"
+                >
+                  Edit
+                </button>
+                <button class="btn btn-sm btn-outline-primary mx-3"
+                        type="submit"
+                        (click)="updateProfile()"
+                        *ngIf="edit && isLoggedIn && loginUser.userprofile == profile_pk"
+                >
+                  Save
+                </button>
+                <button class="btn btn-sm btn-outline-secondary"
+                        *ngIf="edit && isLoggedIn && loginUser.userprofile == profile_pk"
+                        (click)="edit=false"
+                >
+                  Cancel
+                </button>
+              </div>
+
+
             </div>
           </div>
           <hr class="my-4">
@@ -22,6 +59,7 @@
         </div>
       </div>
     </div>
+
     <div class="col-lg-8">
       <div class="card">
         <div class="card-body">
@@ -35,7 +73,8 @@
                        [routerLink]="['/blog', post.id]">{{ post.title }}</a>
                   </h2>
                   <p class="card-text mt-0"><small class="text-muted">
-                    By <a class="link-primary link-styled" [routerLink]="['/account/profile', post.author.userprofile]">{{ post.author.username }}</a>
+                    By <a class="link-primary link-styled"
+                          [routerLink]="['/account/profile', post.author.userprofile]">{{ post.author.username }}</a>
                     on {{ post.published_at | date:'yyyy-MM-dd' }}</small>
                   </p>
                   <p class="card-text text-secondary">{{ post.content_body | slice:0:100 }} {{ post.content_body.length > 100 ? '...':'' }}</p>

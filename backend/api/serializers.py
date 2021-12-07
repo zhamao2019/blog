@@ -1,9 +1,14 @@
 from rest_framework import serializers
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_jwt.settings import api_settings
 
 from accounts.models import CustomUser, UserProfile
 from blog.models import Post, Comment
+
+
+JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
+JWT_ENCODE_HANDLER = api_settings.JWT_ENCODE_HANDLER
 
 
 class TokenObtainSerializer(TokenObtainPairSerializer):

@@ -11,8 +11,8 @@ import { ProfileComponent } from './components/auth/profile/profile.component'
 const routes: Routes = [
   { path: '', redirectTo: 'blog', pathMatch: 'full' },
   { path: 'blog', component: PostComponent },
-  { path: 'blog/:id', component: DetailPostComponent },
   { path: 'blog/create', component: AddPostComponent },
+  { path: 'blog/:id', component: DetailPostComponent },
   { path: 'account/profile/:id', component: ProfileComponent },
   { path: 'account/login', component: LoginComponent },
   { path: 'account/register', component: RegisterComponent },

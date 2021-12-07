@@ -62,8 +62,12 @@ export class PostComponent implements OnInit {
   getAllPosts = () => {
     this.postService.getAllPosts().subscribe(
       response => {
-        this.posts = response.results
-        console.log('res', response.results)
+        this.posts = response
+        for (let post of this.posts){
+          const bodyText = this.htmlToPlaintext(post.content_body);
+          post.content_body = bodyText;
+        }
+        console.log('res', response)
       },
       error => {
         console.log(error)
@@ -100,5 +104,11 @@ export class PostComponent implements OnInit {
         console.log('res', response)
       },
     )
+  }
+
+  htmlToPlaintext(text:string) {
+    let tmp = document.createElement("DIV");
+    tmp.innerHTML = text;
+    return tmp.textContent || tmp.innerText || "";
   }
 }

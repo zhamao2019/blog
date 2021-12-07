@@ -26,7 +26,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all()
     # permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]
+    # authentication_classes = [TokenAuthentication]
 
 
 class TokenObtainView(TokenObtainPairView):
@@ -53,6 +53,10 @@ class ProfileViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        return serializer.save(author=self.request.user)
 
 
 class PostHistoryView(ListView):
