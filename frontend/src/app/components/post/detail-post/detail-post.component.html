@@ -1,11 +1,21 @@
 <div class="container border p-5">
-  <h1>{{ post.title }}</h1>
+  <div class="mb-3 p-0">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link link-primary link-styled px-0" [routerLink]="['/blog/edit', post.id]">Edit</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-primary link-styled">Delete</a>
+      </li>
+    </ul>
+  </div>
+  <h1 class="fw-bold fs-2">{{ post.title }}</h1>
   <p class="fs-6 text-secondary">By <a class="link-primary link-styled" [routerLink]="['/account/profile', post.author.userprofile.id]">{{ post.author.username }}</a>
     on {{ post.published_at | date:'MMM d, y, h:mm a' }}
   </p>
 
   <div class="content-body mt-5 mb-5">
-    <div [innerHtml]="post.content_body"></div>
+    <div [innerHtml]="sanitizer.bypassSecurityTrustHtml(post.content_body)"></div>
   </div>
 
   <hr>

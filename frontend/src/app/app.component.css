@@ -1,3 +1,4 @@
+@import '~ngx-toastr/toastr';
 .link-styled{
   text-decoration: none;
   font-weight: bold;

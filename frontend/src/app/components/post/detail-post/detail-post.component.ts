@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PostService } from '../../../services/post.service';
 import { CommentService } from '../../../services/comment.service';
 import {map} from "rxjs/operators";
+import {DomSanitizer} from "@angular/platform-browser";
 
 
 @Component({
@@ -22,6 +23,7 @@ export class DetailPostComponent implements OnInit {
     private postService: PostService,
     private commentService: CommentService,
     public datepipe: DatePipe,
+    public sanitizer: DomSanitizer
   ) {
     this.post = {
       id: '-1',

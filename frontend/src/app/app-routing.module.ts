@@ -6,6 +6,7 @@ import { AddPostComponent } from './components/post/add-post/add-post.component'
 import { LoginComponent } from './components/auth/login/login.component'
 import { RegisterComponent } from './components/auth/register/register.component'
 import { ProfileComponent } from './components/auth/profile/profile.component'
+import {EditPostComponent} from "./components/post/edit-post/edit-post.component";
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'blog', component: PostComponent },
   { path: 'blog/create', component: AddPostComponent },
   { path: 'blog/:id', component: DetailPostComponent },
+  { path: 'blog/edit/:id', component: EditPostComponent },
   { path: 'account/profile/:id', component: ProfileComponent },
   { path: 'account/login', component: LoginComponent },
   { path: 'account/register', component: RegisterComponent },
