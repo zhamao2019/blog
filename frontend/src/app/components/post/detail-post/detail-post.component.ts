@@ -6,6 +6,7 @@ import { CommentService } from '../../../services/comment.service';
 import {map} from "rxjs/operators";
 import {DomSanitizer} from "@angular/platform-browser";
 import {TokenStorageService} from "../../../services/token-storage.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -28,10 +29,11 @@ export class DetailPostComponent implements OnInit {
     private postService: PostService,
     private commentService: CommentService,
     public datepipe: DatePipe,
+    private toastr: ToastrService,
     public sanitizer: DomSanitizer
   ) {
     this.post = {
-      id: '-1',
+      id: '',
       uuid: '',
       title: '',
       author: {
@@ -103,4 +105,23 @@ export class DetailPostComponent implements OnInit {
       },
     )
   }
+
+  onDelete() {
+    if(confirm("Are you sure to delete?")) {
+      this.postService.deletePost(this.post.id).subscribe(
+        response => {
+          this.post = response;
+          this.router.navigate(['blog/'])
+            .then(() => {
+            this.showSuccessAlert();
+          });
+        },
+      )
+    }
+  }
+
+  showSuccessAlert() {
+    this.toastr.success('Your blog is already deleted', 'Delete Successfully');
+  }
+
 }
