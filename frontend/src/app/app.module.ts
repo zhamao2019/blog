@@ -16,6 +16,8 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { ProfileComponent } from './components/auth/profile/profile.component';
 
 import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { EditPostComponent } from './components/post/edit-post/edit-post.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -27,16 +29,18 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
+    EditPostComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        EditorModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    EditorModule,
+    ToastrModule.forRoot(),
+  ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })

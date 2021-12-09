@@ -2,10 +2,26 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Blog Site</a>
     <div class="navbar-nav mr-auto align-items-center">
-      <a class="nav-link" routerLink="account/login" *ngIf="!isLoggedIn">Login</a>
-      <a class="nav-link active" [routerLink]="['account/profile/', loginUser.userprofile]" *ngIf="isLoggedIn">{{ loginUser.username }}</a>
-      <a class="nav-link" routerLink="blog" (click)="logout()" *ngIf="isLoggedIn">Logout</a>
-      <a class="btn btn-sm btn-outline-primary" routerLink="blog/create" *ngIf="isLoggedIn">+ New Post</a>
+      <a class="nav-link"
+         routerLink="account/login"
+         *ngIf="!isLoggedIn"
+      >Login</a>
+
+      <a class="nav-link active"
+         [routerLink]="['account/profile/', loginUser.userprofile]"
+         *ngIf="isLoggedIn"
+         (click)="goToProfilePage()"
+      >{{ loginUser.username }}</a>
+
+      <a class="nav-link" routerLink="blog"
+         (click)="logout()"
+         *ngIf="isLoggedIn"
+      >Logout</a>
+
+      <a class="btn btn-sm btn-outline-primary"
+         routerLink="blog/create"
+         *ngIf="isLoggedIn"
+      >+ New Post</a>
     </div>
   </div>
 </nav>

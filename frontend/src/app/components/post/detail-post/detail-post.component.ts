@@ -4,6 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PostService } from '../../../services/post.service';
 import { CommentService } from '../../../services/comment.service';
 import {map} from "rxjs/operators";
+import {DomSanitizer} from "@angular/platform-browser";
+import {TokenStorageService} from "../../../services/token-storage.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -16,15 +19,21 @@ export class DetailPostComponent implements OnInit {
   post: any;
   comments: any;
 
+  isLoggedIn = false;
+  loginUser:any;
+
   constructor(
+    private tokenStorageService: TokenStorageService,
     private router: Router,
     public route: ActivatedRoute,
     private postService: PostService,
     private commentService: CommentService,
     public datepipe: DatePipe,
+    private toastr: ToastrService,
+    public sanitizer: DomSanitizer
   ) {
     this.post = {
-      id: '-1',
+      id: '',
       uuid: '',
       title: '',
       author: {
@@ -64,6 +73,13 @@ export class DetailPostComponent implements OnInit {
   ngOnInit(): void {
     this.getPost(this.post.id);
     this.getCommentsByPostId(this.post.id);
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      const loginUser = this.tokenStorageService.getUser();
+      this.loginUser = loginUser
+    }
   }
 
   getPost = (id:string) => {
@@ -89,4 +105,23 @@ export class DetailPostComponent implements OnInit {
       },
     )
   }
+
+  onDelete() {
+    if(confirm("Are you sure to delete?")) {
+      this.postService.deletePost(this.post.id).subscribe(
+        response => {
+          this.post = response;
+          this.router.navigate(['blog/'])
+            .then(() => {
+            this.showSuccessAlert();
+          });
+        },
+      )
+    }
+  }
+
+  showSuccessAlert() {
+    this.toastr.success('Your blog is already deleted', 'Delete Successfully');
+  }
+
 }
