@@ -1,8 +1,12 @@
 <div class="container border p-5">
-  <div class="mb-3 p-0">
+  <div class="mb-3 p-0"
+       *ngIf="isLoggedIn && loginUser.id == post.author.id"
+  >
     <ul class="nav">
       <li class="nav-item">
-        <a class="nav-link link-primary link-styled px-0" [routerLink]="['/blog/edit', post.id]">Edit</a>
+        <a class="nav-link link-primary link-styled px-0"
+           [routerLink]="['/blog/edit', post.id]"
+        >Edit</a>
       </li>
       <li class="nav-item">
         <a class="nav-link link-primary link-styled">Delete</a>
@@ -11,7 +15,7 @@
   </div>
   <h1 class="fw-bold fs-2">{{ post.title }}</h1>
   <p class="fs-6 text-secondary">By <a class="link-primary link-styled" [routerLink]="['/account/profile', post.author.userprofile.id]">{{ post.author.username }}</a>
-    on {{ post.published_at | date:'MMM d, y, h:mm a' }}
+    on {{ post.published_at }}
   </p>
 
   <div class="content-body mt-5 mb-5">

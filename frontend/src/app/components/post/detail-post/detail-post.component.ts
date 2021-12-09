@@ -5,6 +5,7 @@ import { PostService } from '../../../services/post.service';
 import { CommentService } from '../../../services/comment.service';
 import {map} from "rxjs/operators";
 import {DomSanitizer} from "@angular/platform-browser";
+import {TokenStorageService} from "../../../services/token-storage.service";
 
 
 @Component({
@@ -17,7 +18,11 @@ export class DetailPostComponent implements OnInit {
   post: any;
   comments: any;
 
+  isLoggedIn = false;
+  loginUser:any;
+
   constructor(
+    private tokenStorageService: TokenStorageService,
     private router: Router,
     public route: ActivatedRoute,
     private postService: PostService,
@@ -66,6 +71,13 @@ export class DetailPostComponent implements OnInit {
   ngOnInit(): void {
     this.getPost(this.post.id);
     this.getCommentsByPostId(this.post.id);
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      const loginUser = this.tokenStorageService.getUser();
+      this.loginUser = loginUser
+    }
   }
 
   getPost = (id:string) => {

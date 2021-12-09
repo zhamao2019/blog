@@ -19,6 +19,12 @@ export class EditPostComponent implements OnInit {
     id: '',
     title: '',
     content_body: '',
+    author: {
+      id: '',
+      uuid: '',
+      username: '',
+      email: '',
+    }
   };
 
   blogForm = this.fb.group({
@@ -75,20 +81,20 @@ export class EditPostComponent implements OnInit {
       response => {
         this.post = response;
         console.log('updated blog',response);
+
+        // Redirect to blog detail page
+        this.router.navigate(['blog/', this.post.id])
+          .then(() => {
+            this.showSuccessAlert();
+          });
       },
         error => {
         console.log(error)
       },
     )
-    this.showSuccess();
-    // Redirect to blog detail page and refresh
-    this.router.navigate(['blog/', this.post.id])
-      .then(() => {
-      window.location.reload();
-    });
   }
 
-  showSuccess() {
-    this.toastr.success('Your update is already saved', 'Update Successfully');
+  showSuccessAlert() {
+    this.toastr.success('Your blog is already updated', 'Update Successfully');
   }
 }

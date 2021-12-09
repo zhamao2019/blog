@@ -3,6 +3,7 @@ import {TokenStorageService} from "../../../services/token-storage.service";
 import {PostService} from "../../../services/post.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-add-post',
@@ -39,6 +40,7 @@ export class AddPostComponent implements OnInit {
     private postService: PostService,
     private route: ActivatedRoute,
     private router: Router,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -67,13 +69,16 @@ export class AddPostComponent implements OnInit {
         this.post = response
         this.post.id = response.id
         console.log(response.id);
-        this.router.navigate(['blog/', response.id]);
+
+        this.router.navigate(['blog/', response.id])
+          .then(() => {
+          this.showSuccessAlert();
+        });
       },
     )
-    // console.log('post after', this.post.id);
-    // this.router.navigate(['blog/'], response.id);
   }
 
-
-
+  showSuccessAlert() {
+    this.toastr.success('Your blog is already published', 'Create Successfully');
+  }
 }
