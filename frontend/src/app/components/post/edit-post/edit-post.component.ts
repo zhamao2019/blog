@@ -94,6 +94,12 @@ export class EditPostComponent implements OnInit {
     )
   }
 
+  onCancel() {
+    if(confirm("Are you sure to cancel? Your update will not be saved")) {
+      this.router.navigate(['blog/', this.post.id]);
+    }
+  }
+
   showSuccessAlert() {
     this.toastr.success('Your blog is already updated', 'Update Successfully');
   }
