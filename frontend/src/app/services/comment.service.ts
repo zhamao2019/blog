@@ -22,5 +22,12 @@ export class CommentService {
       {headers: this.httpHeaders});
   }
 
+  createComment(data:any): Observable<any>{
+    return this.http.post(this.CommentAPI, data,{headers: this.httpHeaders});
+  }
+
+  deleteComment(id:string): Observable<any>{
+    return this.http.delete(`${this.CommentAPI}${id}/`, {headers: this.httpHeaders});
+  }
 
 }

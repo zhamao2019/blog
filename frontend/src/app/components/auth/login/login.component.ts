@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
 import {FormBuilder} from "@angular/forms";
 import {UserService} from "../../../services/user.service";
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private authService: AuthService,
     private userService: UserService,
+    private location: Location
     ) {
     this.loginForm = this.fb.group({
       username: [""],
@@ -65,8 +67,8 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
       }
     );
-
-    this.router.navigate(['']);
+    // go back to the previous page
+    this.location.back();
   }
 
   onLogOut(){

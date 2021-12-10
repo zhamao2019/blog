@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import {DatePipe, Location} from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PostService } from '../../../services/post.service';
 import { CommentService } from '../../../services/comment.service';
@@ -18,6 +18,8 @@ import {ToastrService} from "ngx-toastr";
 export class DetailPostComponent implements OnInit {
   post: any;
   comments: any;
+  comment: any;
+  commentForm: any;
 
   isLoggedIn = false;
   loginUser:any;
@@ -30,7 +32,8 @@ export class DetailPostComponent implements OnInit {
     private commentService: CommentService,
     public datepipe: DatePipe,
     private toastr: ToastrService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private location: Location
   ) {
     this.post = {
       id: '',
@@ -52,7 +55,7 @@ export class DetailPostComponent implements OnInit {
 
     this.comments = [
       {
-        id: '-1',
+        id: '',
         user: {
           id: '',
           username: '',
@@ -68,8 +71,30 @@ export class DetailPostComponent implements OnInit {
         comment: '',
         created_at: '',
       },
-    ]
+    ];
+
+    this.comment = {
+      id: '',
+      user: {
+        id: '',
+        username: '',
+        uuid: '',
+        email: '',
+        userprofile: {
+          id: '',
+          avatar: '',
+          bio: '',
+        },
+      },
+      post_id: '',
+      comment: '',
+    }
+
+    this.commentForm = {
+      comment: "",
+    }
   }
+
   ngOnInit(): void {
     this.getPost(this.post.id);
     this.getCommentsByPostId(this.post.id);
@@ -106,22 +131,56 @@ export class DetailPostComponent implements OnInit {
     )
   }
 
-  onDelete() {
+  deleteBlog() {
     if(confirm("Are you sure to delete?")) {
       this.postService.deletePost(this.post.id).subscribe(
         response => {
           this.post = response;
           this.router.navigate(['blog/'])
             .then(() => {
-            this.showSuccessAlert();
+            this.showSuccessAlert('Delete Successfully','Your blog is already deleted');
           });
         },
       )
     }
   }
 
-  showSuccessAlert() {
-    this.toastr.success('Your blog is already deleted', 'Delete Successfully');
+  createComment() {
+    this.comment.comment = this.commentForm.comment
+    this.comment.post_id = this.post.id
+    this.comment.user.id = this.loginUser.id
+
+    this.commentService.createComment(this.comment).subscribe(
+      response => {
+        console.log('resp',response)
+        this.comment = response;
+
+        location.reload();
+      },
+    )
+    this.showSuccessAlert('Create Successfully','Your comment is created');
+  }
+
+  deleteComment(id:any) {
+    if(confirm("Are you sure to delete?")) {
+      this.commentService.deleteComment(id).subscribe(
+        response => {
+          console.log('resp', response)
+          this.comment = response;
+
+          this.location.back();
+        },
+      )
+      this.showSuccessAlert('Create Successfully', 'Your comment is created');
+    }
+  }
+
+  onLogin() {
+    this.router.navigate(['account/login']);
+  }
+
+  showSuccessAlert(title:string, msg:string) {
+    this.toastr.success(msg, title);
   }
 
 }

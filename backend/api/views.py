@@ -67,20 +67,13 @@ class PostHistoryView(ListView):
         return JSONResponse(serializer.data)
 
 
-# def PostHistoryView(request, author):
-#     try:
-#         posts = Post.objects.filter(author=author)
-#     except Post.DoesNotExist:
-#         return HttpResponse(status=400)
-#
-#     if request.method == 'GET':
-#         serializer = PostSerializer(posts, many=True)
-#         return JSONResponse(serializer.data)
-
-
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user, post_id=self.request.data['post_id'])
 
 
 class CommentListView(ListView):
