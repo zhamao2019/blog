@@ -6,6 +6,10 @@
          routerLink="account/login"
          *ngIf="!isLoggedIn"
       >Login</a>
+      <a class="btn btn-sm btn-primary"
+         routerLink="account/register"
+         *ngIf="!isLoggedIn"
+      >Register</a>
 
       <a class="nav-link active"
          [routerLink]="['account/profile/', loginUser.userprofile]"

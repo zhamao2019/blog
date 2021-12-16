@@ -91,6 +91,51 @@ class CustomUserSerializer(serializers.ModelSerializer):
         }
 
 
+class ChangePasswordSerializer(serializers.Serializer):
+    model = CustomUser
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+
+class PasswordResetSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
+
+    class Meta:
+        model = Post
+        fields = ["email"]
+#
+#     def validate(self, attrs):
+#         try:
+#             email = attrs.get("email")
+#             if CustomUser.objects.filter(email=email).exists():
+#                 user = CustomUser.objects.get(email=email)
+#                 # uidb64 = urlsafe_base64_encode(user.id)
+#                 token = PasswordResetTokenGenerator().make_token(user)
+#                 pass
+#             return attrs
+#
+#         except:
+#
+#         return
+
+
+    # def validate(self, attrs):
+    #     if attrs['password'] != attrs['password2']:
+    #         raise serializers.ValidationError({"password": "Password fields didn't match."})
+    #
+    #     return attrs
+    #
+    # def update(self, instance, validated_data):
+    #     instance.set_password(validated_data['password'])
+    #     instance.save()
+    #
+    #     return instance
+
+
 class PostSerializer(serializers.ModelSerializer):
     author = CustomUserSerializer(read_only=True)
 

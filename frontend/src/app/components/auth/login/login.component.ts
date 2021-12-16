@@ -5,6 +5,7 @@ import { TokenStorageService } from '../../../services/token-storage.service';
 import {FormBuilder} from "@angular/forms";
 import {UserService} from "../../../services/user.service";
 import {Location} from '@angular/common';
+import {UrlService} from "../../../services/shared/url.service";
 
 
 @Component({
@@ -19,7 +20,14 @@ export class LoginComponent implements OnInit {
   user:any;
   isLoggedIn = false;
   isLoginFailed = false;
+  previousUrl: string = '';
   errorMessage = '';
+
+  loginRedirectToHomeUrlsList = [
+    "/account/password_reset_confirm",
+    "/account/register",
+    "/account/login",
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -27,7 +35,8 @@ export class LoginComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private authService: AuthService,
     private userService: UserService,
-    private location: Location
+    private location: Location,
+    private urlService: UrlService,
     ) {
     this.loginForm = this.fb.group({
       username: [""],
@@ -68,11 +77,21 @@ export class LoginComponent implements OnInit {
       }
     );
     // go back to the previous page
-    this.location.back();
+    // this.location.back();
+    this.goToPrevious();
   }
 
-  onLogOut(){
+  goToPrevious(): void {
+    let previous = this.urlService.getPreviousUrl();
+    console.log("pre url: ",previous);
 
+    if (this.loginRedirectToHomeUrlsList.includes(previous) || previous.includes("/account/password_reset_confirm")) {
+      this.router.navigate(["blog/"]);
+    }
+    else {
+      this.router.navigate([previous]);
+      console.log(previous);
+    }
   }
 
 }

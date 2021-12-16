@@ -18,6 +18,9 @@ import { ProfileComponent } from './components/auth/profile/profile.component';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { EditPostComponent } from './components/post/edit-post/edit-post.component';
 import { ToastrModule } from 'ngx-toastr';
+import { PasswordResetComponent } from './components/auth/password-reset/password-reset.component';
+import { PasswordResetConfirmComponent } from './components/auth/password-reset-confirm/password-reset-confirm.component';
+import {UrlService} from "./services/shared/url.service";
 
 
 @NgModule({
@@ -30,6 +33,8 @@ import { ToastrModule } from 'ngx-toastr';
     LoginComponent,
     ProfileComponent,
     EditPostComponent,
+    PasswordResetComponent,
+    PasswordResetConfirmComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,4 +49,8 @@ import { ToastrModule } from 'ngx-toastr';
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  // do not remove this
+  // use to redirect to previous page
+  constructor(private urlService: UrlService){}
+}

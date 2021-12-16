@@ -60,6 +60,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    # "djoser",
+    'django_rest_passwordreset',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     # remove and replace the old img in path after updated
@@ -80,9 +82,13 @@ REST_FRAMEWORK = {
     # ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     ],
 }
 
+DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
+    "CLASS": "django_rest_passwordreset.tokens.RandomStringTokenGenerator"
+}
 # REST_FRAMEWORK = {
 #     # Pagination allows you to control how many objects per page are returned.
 #     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -93,7 +99,7 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=2),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
 
-    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_TYPES': ('JWT',),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
@@ -102,6 +108,24 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
+#
+# DJOSER = {
+#     "USER_ID_FIELD": "username",
+#     "LOGIN_FIELD": "email",
+#     "SEND_ACTIVATION_EMAIL": True,
+#     "ACTIVATION_URL": "activate/{uid}/{token}",
+#     "PASSWORD_RESET_CONFIRM_URL": "reset_password/{uid}/{token}", # the reset link
+#
+#     "SERIALIZERS": {
+#         'token_create': 'backend.api.serializers.TokenObtainSerializer',
+#         "user_register": "backend.api.serializers.RegistrationSerializer",  # custom serializer
+#         "user": "backend.api.serializers.CustomUserSerializer",
+#         "current_user": "djoser.serializers.UserSerializer",
+#         "user_delete": "djoser.serializers.UserSerializer",
+#     },
+#
+#     "TOKEN_MODEL": None,
+# }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -210,8 +234,12 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email Test server
-EMAIL_HOST = "localhost"
+EMAIL_HOST = "localhost.com"
 EMAIL_PORT = 1025
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
+DEFAULT_FROM_EMAIL = "no-reply@blogsite.local"
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
