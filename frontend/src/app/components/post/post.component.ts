@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { PostService } from '../../services/post.service';
 import {CommentService} from "../../services/comment.service";
+import {WeatherService} from "../../services/external/weather.service";
 
 // import { Post } from "../../models/post";
 
@@ -32,10 +33,11 @@ export class PostComponent implements OnInit {
   }];
 
   selectedPost: any;
+  cityWeather: any;
 
   constructor(
     private postService: PostService,
-    private commentService: CommentService,
+    private weatherService: WeatherService,
     public datepipe: DatePipe,
   ) {
     this.selectedPost = {
@@ -53,10 +55,56 @@ export class PostComponent implements OnInit {
       content_body: '',
       published_at:'',
     }
+
+    this.cityWeather = {
+      "coord": {
+        "lon": -75.6981,
+        "lat": 45.4112
+      },
+      "weather": [
+        {
+          "id": 804,
+          "main": "Clouds",
+          "description": "overcast clouds",
+          "icon": "04d"
+        }
+      ],
+      "base": "stations",
+      "main": {
+        "temp": 275.81,
+        "feels_like": 273.53,
+        "temp_min": 274.88,
+        "temp_max": 277.75,
+        "pressure": 1004,
+        "humidity": 66
+      },
+      "visibility": 10000,
+      "wind": {
+        "speed": 2.24,
+        "deg": 238,
+        "gust": 6.71
+      },
+      "clouds": {
+        "all": 100
+      },
+      "dt": 1644602559,
+      "sys": {
+        "type": 2,
+        "id": 2005537,
+        "country": "CA",
+        "sunrise": 1644581433,
+        "sunset": 1644618220
+      },
+      "timezone": -18000,
+      "id": 6094817,
+      "name": "Ottawa",
+      "cod": 200
+    }
   }
 
   ngOnInit(): void {
     this.getAllPosts();
+    this.getWeather();
   }
 
   getAllPosts = () => {
@@ -90,8 +138,6 @@ export class PostComponent implements OnInit {
     this.postService.updatePost(this.selectedPost).subscribe(
       response => {
         this.selectedPost = response
-
-        console.log('res', response)
       },
     )
   }
@@ -103,6 +149,15 @@ export class PostComponent implements OnInit {
         this.selectedPost = response
         console.log('res', response)
       },
+    )
+  }
+
+  getWeather(){
+    this.weatherService.getWeather().subscribe(
+      response => {
+        this.cityWeather = response
+        console.log('weather', response)
+      }
     )
   }
 
