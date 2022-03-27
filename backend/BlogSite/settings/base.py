@@ -67,8 +67,11 @@ INSTALLED_APPS = [
     # remove and replace the old img in path after updated
     # refer: https://github.com/un1t/django-cleanup
     'django_cleanup.apps.CleanupConfig',
+    'django_nose',
+    'coverage',
 ]
 
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
